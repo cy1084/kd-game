@@ -1,8 +1,8 @@
 package com.game.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -14,28 +14,26 @@ import javax.servlet.http.HttpServletResponse;
 import com.game.common.CommonView;
 import com.game.service.UserInfoService;
 import com.game.service.impl.UserInfoServiceImpl;
+import com.google.gson.Gson;
 
 @WebServlet("/user-info/*")
 public class UserInfoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private UserInfoService userInfoService = new UserInfoServiceImpl();
+	private Gson gson=new Gson();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String cmd = CommonView.getCmd(request);
+		String json="";
 		if ("list".equals(cmd)) {
-			List<Map<String, String>> userList = userInfoService.selectUserInfoList(null);
-			request.setAttribute("userList", userList);
-		} else if ("view".equals(cmd)) {
-			String uiNum = request.getParameter("uiNum");
-			Map<String, String> userInfo = userInfoService.selectUserInfo(uiNum);
-			request.setAttribute("userInfo", userInfo);
-		} else if ("update".equals(cmd)) {
-			String uiNum = request.getParameter("uiNum");
-			Map<String, String> userInfo = userInfoService.selectUserInfo(uiNum);
-			request.setAttribute("userInfo", userInfo);
+			json=gson.toJson(userInfoService.selectUserInfoList(null));
+		} else if ("view".equals(cmd) || "update".equals(cmd)) {
+
 		}
-		CommonView.forward(request,response);
+		response.setContentType("application/json;charset=UTF-8"); //원래 이게 정석
+		PrintWriter out=response.getWriter();
+		out.print(json);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -50,11 +48,12 @@ public class UserInfoServlet extends HttpServlet {
 		if (request.getParameter("uiBirth") != null) {
 			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
 		}
+		/*
 		if ("insert".equals(cmd)) {
-			int result=userInfoService.insertUserInfo(userInfo);
+			int result = userInfoService.insertUserInfo(userInfo);
 			request.setAttribute("msg", "유저 등록 성공");
 			request.setAttribute("url", "/user-info/login");
-			if(result != 1) {
+			if (result != 1) {
 				request.setAttribute("msg", "유저 등록 실패");
 				request.setAttribute("url", "/user-info/insert");
 			}
@@ -79,7 +78,7 @@ public class UserInfoServlet extends HttpServlet {
 				request.setAttribute("msg", "유저 삭제 실패");
 				request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 			}
-		}
+		}*/
 
 	}
 

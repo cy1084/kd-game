@@ -9,8 +9,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-import com.game.mapper.BoardInfoMapper;
-import com.game.vo.BoardInfoVO;
+import com.game.mapper.UserInfoMapper;
+import com.game.vo.UserInfoVO;
 
 public class MybatisSqlSessionFactory {
 	private static SqlSessionFactory SSF;
@@ -32,34 +32,12 @@ public class MybatisSqlSessionFactory {
 	}
 
 	public static void main(String[] args) {
-		SqlSessionFactory ssf = getSqlSessionFactory();
-		SqlSession session = ssf.openSession();
-		BoardInfoMapper biMapper = session.getMapper(BoardInfoMapper.class);
-		try {
-			
-			BoardInfoVO bi = new BoardInfoVO();
-			bi.setBiNum(4);
-			bi.setBiTitle("마이바티스 인서트 테스트");
-			bi.setBiContent("집 보내줘");
-			bi.setUiNum(1);
-			int result=biMapper.insertBoardInfo(bi);
-			System.out.println("insert result: "+result);
-			bi=biMapper.selectBoardInfo(bi);
-			bi.setBiTitle("마이바티스 업데이트 테스트");
-			result=biMapper.updateBoardInfo(bi);
-			System.out.println("update result: "+result);
-			// session.getMapper(BoardInfoMapper.class);
-	
-			List<BoardInfoVO> list = biMapper.selectBoardInfoList(bi);
-			// System.out.println(list);
-			for (BoardInfoVO board : list) {
-				System.out.println(board);
-			}
-			BoardInfoVO board = biMapper.selectBoardInfo(bi);
-			System.out.println(board);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		SqlSessionFactory ssf=getSqlSessionFactory();
+		SqlSession session=ssf.openSession();//세션 만들고
+		UserInfoMapper uiMapper=session.getMapper(UserInfoMapper.class);//매퍼 가져옴
+		List<UserInfoVO> list=uiMapper.selectUserInfoList(null);
+		
+		System.out.println(list);
 	}
 
 }

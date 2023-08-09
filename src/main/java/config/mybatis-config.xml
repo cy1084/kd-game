@@ -27,6 +27,8 @@
 
 	<mappers>
 		<mapper resource="mybatis/BoardInfoMapper.xml" />
+		<mapper resource="mybatis/UserInfoMapper.xml" />
+	
 	</mappers>
 
 

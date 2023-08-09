@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBCon {
 	public static final String DRIVER_NAME = "org.mariadb.jdbc.Driver";
 	public static final String URL = "jdbc:mariadb://localhost:3306/game";
-	public static final String USER = "root";
+	public static final String USER = "KDTEST";
 	public static final String PWD = "kd1824java";
 
 	static {
@@ -29,7 +29,7 @@ public class DBCon {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getCon());
+		//System.out.println(getCon());
 
 	}
 }

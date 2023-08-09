@@ -6,35 +6,21 @@
 <mapper namespace="com.game.mapper.BoardInfoMapper">
 	<select id="selectBoardInfoList"
 		resultType="com.game.vo.BoardInfoVO">
-		SELECT * FROM BOARD_INFO
+		SELECT BI.*,UI.UI_NAME FROM BOARD_INFO BI
+		INNER JOIN USER_INFO UI ON BI.UI_NUM=UI.UI_NUM
 		<where>
-			<if test='biNum != null and biNum != 0'>
-				AND BI_NUM=#{biNum}
+			<if test='searchStr!=null and searchStr!=""'>
+				<if test='searchType=="1" or searchType=="4" or searchType=="6" or searchType=="7"'>
+					OR BI_TITLE LIKE CONCAT('%',#{searchStr},'%')
+				</if>
+				<if test='searchType=="2" or searchType=="5" or searchType=="6" or searchType=="7"'>
+					OR UI_NAME LIKE CONCAT('%',#{searchStr},'%')
+				</if>
+				<if test='searchType=="1" or searchType=="4" or searchType=="6" or searchType=="7"'>
+					OR BI_CONTENT LIKE CONCAT('%',#{searchStr},'%')
+				</if>
 			</if>
-			<if test='biTitle != null and biTitle != ""'>
-				AND BI_TITLE=#{biTitle}
-			</if>
-			<if test='biContent != null and biContent != ""'>
-				AND BI_CONTENT=#{biContent}
-			</if>
-			<if test='uiNum != null and uiNum != 0'>
-				AND UI_NUM=#{uiNum}
-			</if>
-			<if test='credat != null and credat != ""'>
-				AND CREDAT=#{credat}
-			</if>
-			<if test='cretim != null and cretim != ""'>
-				AND CRETIM=#{cretim}
-			</if>
-			<if test='lmodat != null and lmodat != ""'>
-				AND LMODAT=#{lmodat}
-			</if>
-			<if test='lmotim != null and lmotim != ""'>
-				AND LMOTIM=#{lmotim}
-			</if>
-			<if test='active != null and active != ""'>
-				AND ACTIVE=#{active}
-			</if>
+
 		</where>
 	</select>
 	<select id="selectBoardInfo"

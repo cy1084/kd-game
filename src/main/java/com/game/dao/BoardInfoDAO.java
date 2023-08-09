@@ -3,8 +3,10 @@ package com.game.dao;
 import java.util.List;
 import java.util.Map;
 
+import com.game.vo.BoardInfoVO;
+
 public interface BoardInfoDAO {
-	List<Map<String, String>> selectBoardInfoList(Map<String, String> boardInfo);
+	List<Map<String,String>> selectBoardInfoList(Map<String,String> boardInfo);
 
 	Map<String, String> selectBoardInfo(String biNum);
 
