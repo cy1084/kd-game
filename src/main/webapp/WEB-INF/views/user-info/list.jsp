@@ -53,7 +53,8 @@
 		xhr.onreadystatechange = function(){
 			if(xhr.readyState === 4){
 				if(xhr.status === 200){
-					const list = JSON.parse(xhr.responseText);
+					const list = JSON.parse(xhr.responseText); 
+					//파싱 전: string, 파싱 후: 구조체, 객체
 					let html = '';
 					for(const user of list){
 						html += '<tr>';
