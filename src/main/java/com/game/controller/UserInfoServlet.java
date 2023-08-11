@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.game.common.CommonView;
+import com.game.common.JSON;
 import com.game.service.UserInfoService;
 import com.game.service.impl.UserInfoServiceImpl;
 import com.google.gson.Gson;
@@ -35,12 +36,16 @@ public class UserInfoServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		out.print(json);
 	}
-
+	
+	private final static Gson GSON=new Gson();
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		String cmd = CommonView.getCmd(request);
-		Map<String, String> userInfo = new HashMap<>();
+		
+		Map<String, String> userInfo = JSON.parse(request,Map.class);
+		
 		userInfo.put("uiId", request.getParameter("uiId"));
 		userInfo.put("uiName", request.getParameter("uiName"));
 		userInfo.put("uiPwd", request.getParameter("uiPwd"));
@@ -48,14 +53,16 @@ public class UserInfoServlet extends HttpServlet {
 		if (request.getParameter("uiBirth") != null) {
 			userInfo.put("uiBirth", request.getParameter("uiBirth").replace("-", ""));
 		}
-		/*
+		
+		int result=0;
 		if ("insert".equals(cmd)) {
-			int result = userInfoService.insertUserInfo(userInfo);
-			request.setAttribute("msg", "유저 등록 성공");
-			request.setAttribute("url", "/user-info/login");
-			if (result != 1) {
-				request.setAttribute("msg", "유저 등록 실패");
-				request.setAttribute("url", "/user-info/insert");
+			//int result = userInfoService.insertUserInfo(userInfo);
+			//request.setAttribute("msg", "유저 등록 성공");
+			//request.setAttribute("url", "/user-info/login");
+			//if (result != 1) {
+			//	request.setAttribute("msg", "유저 등록 실패");
+			//	request.setAttribute("url", "/user-info/insert");
+			result=userInfoService.insertUserInfo(userInfo);
 			}
 
 		} else if ("update".equals(cmd)) {
@@ -78,7 +85,9 @@ public class UserInfoServlet extends HttpServlet {
 				request.setAttribute("msg", "유저 삭제 실패");
 				request.setAttribute("url", "/user-info/view?uiNum=" + uiNum);
 			}
-		}*/
+		}else if("login".equals(cmd)) {
+			
+		}
 
 	}
 
