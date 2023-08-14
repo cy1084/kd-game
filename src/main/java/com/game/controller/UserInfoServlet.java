@@ -2,8 +2,6 @@ package com.game.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.game.common.CommonView;
-import com.game.common.JSON;
 import com.game.service.UserInfoService;
 import com.game.service.impl.UserInfoServiceImpl;
+import com.game.vo.UserInfoVO;
 import com.google.gson.Gson;
 
 @WebServlet("/user-info/*")
@@ -44,8 +42,10 @@ public class UserInfoServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		String cmd = CommonView.getCmd(request);
 		
-		Map<String, String> userInfo = JSON.parse(request,Map.class);
+		//UserInfoVO userInfo = JSON.parse(request,Map.class);
+		//UserInfoVO userInfo = casting(request,UserInfoVO.class);
 		
+		/*
 		userInfo.put("uiId", request.getParameter("uiId"));
 		userInfo.put("uiName", request.getParameter("uiName"));
 		userInfo.put("uiPwd", request.getParameter("uiPwd"));
@@ -89,6 +89,7 @@ public class UserInfoServlet extends HttpServlet {
 			
 		}
 
+	*/
+		
 	}
-
 }

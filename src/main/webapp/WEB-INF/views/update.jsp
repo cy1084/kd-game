@@ -21,14 +21,15 @@
 	<script>
 	function sendObj(){
 		const param={
-				name:document.querySelector('#name').value;
-				age:document.querySelector('#age').value;
-				address:document.querySelector('#address').value;
+				//uiNum:${param.uiNum},
+				name:document.querySelector('#name').value,
+				age:document.querySelector('#age').value,
+				address:document.querySelector('#address').value,
 		}
 		const json=JSON.stringify(param);
 		
 		const xhr=new XMLHttpRequest();
-		xhr.open('POST','/list/insert');
+		xhr.open('POST','/list/update');
 		xhr.setRequestHeader('Content-Type','application/json');
 		xhr.onreadystatechange=function(){
 			if(xhr.readyState===4){
